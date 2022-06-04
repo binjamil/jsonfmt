@@ -1,13 +1,13 @@
 # jsonfmt 
 
-jsonfmt is a command line utility app that pretty prints the JSON to stdout.
+jsonfmt is a simple CLI app written in Rust that pretty-prints JSON to stdout.
 
 ## Installation
 
 To install jsonfmt, you first need to [install Rust](https://www.rust-lang.org/tools/install).
 
 ```sh
-git clone https://github.com/binjamil/jsonfmt
+git clone https://github.com/binjamil/jsonfmt.git 
 cd jsonfmt
 cargo install --path .
 ```
