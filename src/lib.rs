@@ -24,22 +24,32 @@ pub fn get_args() -> Result<String, Box<dyn Error>> {
 pub fn run(filename: &str) -> Result<(), Box<dyn Error>> {
     let fh = open(filename)?;
     let mut indent = 0;
+    let mut in_string = false;
 
     for line in fh.lines() {
         let line = line?;
         for c in line.chars() {
+            if in_string {
+                print!("{}", c);
+                in_string = c != '"';
+                continue;
+            }
             match c {
-                '{' => {
+                '{' | '[' => {
                     indent += 2;
                     print!("{}\n{}", c, " ".repeat(indent));
                 }
-                '}' => {
+                '}' | ']' => {
                     indent -= 2;
                     print!("\n{}{}", " ".repeat(indent), c);
                 }
                 ' ' => continue,
                 ':' => print!("{} ", c),
                 ',' => print!("{}\n{}", c, " ".repeat(indent)),
+                '"' => {
+                    in_string = true;
+                    print!("{}", c);
+                }
                 _ => print!("{}", c),
             }
         }
